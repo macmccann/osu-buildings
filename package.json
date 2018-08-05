@@ -1,0 +1,24 @@
+{
+  "name": "osu-buildings",
+  "version": "1.0.0",
+  "description": "A js script to convert an excel spreadsheet of building data to a pdf",
+  "main": "converter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "read-excel-file": "2.0.2",
+    "mustache": "2.3.0",
+    "html-pdf": "2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/macmccann/osu-buildings.git"
+  },
+  "author": "Mac McCann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/macmccann/osu-buildings/issues"
+  },
+  "homepage": "https://github.com/macmccann/osu-buildings#readme"
+}
