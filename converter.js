@@ -56,7 +56,7 @@ const COLUMN_NAMES = [
   'costPerSeat',
   'depreciation'
 ]
-const PAGE_NUMBER_OVERRIDE = 3;
+const PAGE_NUMBER_OVERRIDE = null;
 
 // read the data from the excel file
 const buildings = [];
