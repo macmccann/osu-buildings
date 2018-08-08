@@ -3,6 +3,8 @@ const readXlsxFile = require('read-excel-file/node');
 const mustache = require('mustache');
 const fs = require('fs');
 const pdf = require('html-pdf');
+// var merge = require('easy-pdf-merge');
+
 
 // the html that will be templated to display the data
 const template = fs.readFileSync('./template.html', "utf8");
@@ -54,7 +56,7 @@ const COLUMN_NAMES = [
   'costPerSeat',
   'depreciation'
 ]
-const PAGE_NUMBER_OVERRIDE = null;
+const PAGE_NUMBER_OVERRIDE = 3;
 
 // read the data from the excel file
 const buildings = [];
@@ -63,6 +65,7 @@ readXlsxFile('./buildings.xlsx').then((rows) => {
   // `rows` is an array of rows
   // each row being an array of cells.
   let pdfNum = 0;
+  const filenames = [];
   const pageNumbers = PAGE_NUMBER_OVERRIDE || 1000000;
   for (let i = 0; i < rows.length && i < pageNumbers; i++) {
     const row = rows[i];
@@ -71,19 +74,29 @@ readXlsxFile('./buildings.xlsx').then((rows) => {
       // get the html from the template and the data
       const html = mustache.render(template, building);
       // convert it to pdf
-      const pdfOptions = { 
+      const pdfOptions = {
         "height": "8in",        // allowed units: mm, cm, in, px
-        "width": "10.5in",            // allowed units: mm, cm, in, px      
+        "width": "10.5in",            // allowed units: mm, cm, in, px
       };
-      pdf.create(html, pdfOptions).toFile('./pdf/page' + pdfNum + '.pdf', function(err, res) {
-        if (err) {
-          console.log("ERROR: " + err);
-        }
-        console.log(res.filename);
+      const filename = './pdf/page' + pdfNum + '.pdf';
+      filenames.push(filename);
+      pdf.create(html, pdfOptions).toFile(filename, function(err, res) {
+          if (err) {
+              console.log("ERROR: " + err);
+          } else {
+              console.log(res.filename);
+          }
       });
       pdfNum++;
     }
   }
+  // merge(filenames, './final.pdf', function(err) {
+  //     if (err) {
+  //         console.log(err)
+  //     } else {
+  //         console.log('SUCCESS');
+  //     }
+  // });
 });
 
 const buildingFrom = row => {
